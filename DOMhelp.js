@@ -1,5 +1,5 @@
 DOMhelp={
-	// Find the last sibling of the current node
+	// 获取当前的节点的最后一个兄弟节点
 	lastSibling:function(node)
 	{
 		var tempObj = node.parentNode.lastChild;
@@ -10,7 +10,7 @@ DOMhelp={
 		return (tempObj.nodeType == 1) ? tempObj : false;
 	},
 
-	// Find the first sibling of the current node
+	// 获取当前的节点的第一个兄弟节点
 	firstSibling:function(node)
 	{
 		var tempObj = node.parentNode.firstChild;
@@ -21,7 +21,7 @@ DOMhelp={
 		return (tempObj.nodeType == 1) ? tempObj : false;
 	},
 
-	// Retrieve the content of the first text node sibling of the current node
+	// 获取当前节点的第一个文本节点的内容
 	getText:function(node)
 	{
 		if(!node.hasChildNodes()){return false;}
@@ -34,7 +34,7 @@ DOMhelp={
 		return tempObj.nodeType==3 ? tempObj.nodeValue : false;
 	},
 
-	// Set the content of the first text node sibling of the current node 
+	// 设置当前节点的第一个文本节点的内容 
 	setText:function(node)
 	{
 		if(!node.hasChildNodes()){return false;}
@@ -54,8 +54,8 @@ DOMhelp={
 		}
 	},
 
-	// Find the next or previous sibling that is an element
-	// and not a text node or line break
+	// 获取当前节点相邻的非文字或换行的节点
+	// direction=1 为下一个节点， =-1 为上一个
 	closestSibling:function(node, direction)
 	{
 		var tempObj;
@@ -78,7 +78,7 @@ DOMhelp={
 		return tempObj.nodeType==1 ? tempObj : false;
 	},
 
-	// Create a new link containing the given text
+	// 创建一个内容为txt链接为to的链接
 	createLink:function(to, txt)
 	{
 		var tempObj = document.createElement('a');
@@ -87,13 +87,57 @@ DOMhelp={
 		return tempObj;
 	},
 
-	// Create a new element containing the given text
+	// 创建内容为txt的节点
 	createTextElm:function(elm, txt)
 	{
 		var tempObj = document.createElement(elm);
 		tempObj.appendChild(document.createTextNode(txt));
 		return tempObj;
 	},
+
+	// 添加、移除标签上的class
+	// swap:替换  add:添加  remove:移除  check:检查(返回布尔值)
+	cssjs : function(a, o, c1, c2)
+	{
+		switch (a)
+		{
+			case 'swap': 
+				if(!DOMhelp.cssjs('check', o, c1))
+				{
+					o.className.replace(c2, c1);
+				}
+				else
+				{
+					o.className.replace(c1, c2);
+				}
+			break;
+
+			case 'add':
+				if(!DOMhelp.cssjs('check', o, c1))
+				{
+					o.className += o.className ? ' '+c1 : c1;
+				}
+			break;
+
+			case 'remove':
+				var rep = o.className.match(' '+c1) ? ' '+c1 : c1;
+				o.className = o.className.replace(req, '');
+			break;
+
+			case 'check':
+				var found = false;
+				var temparray = o.className.split(' ');
+				for (var i=0; i<temparray.length; i++)
+				{
+					if (temparray[i] == c1)
+					{
+						found == true;
+					}
+				}
+				return found;
+			break;
+		}
+	}
 
 	// Simulate a debugging console to avoid the need for alerts
 	initDebug:function()
