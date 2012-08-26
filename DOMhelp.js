@@ -3,6 +3,6 @@ DOMhelp={
 	lastSibling:function(node){},
 
 	// Find the first sibling of the current node
-
+	firstSibling:function(node){},
 
 }
